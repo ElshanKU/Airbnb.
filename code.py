@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the compressed CSV file from GitHub
-url = 'https://github.com/<username>/<repository>/raw/main/calendar.csv.gz'
+url = 'https://github.com/ElshanKU/Airbnb./raw/main/calendar.csv.gz'
 df = pd.read_csv(url, compression='gzip')
 
 # Convert the 'date available' column to datetime format
@@ -21,4 +21,4 @@ monthly_avg_prices.plot()
 plt.xlabel('Months')
 plt.ylabel('Average Price')
 plt.title('Average Prices of Listings Over Months')
-plt.show()
+plt.savefig('chart.png')
