@@ -34,4 +34,4 @@ plt.yticks([150, 350, 500, 750, 1000])
 
 # Save the chart as a PNG file
 plt.savefig('chart.png')
-
+# Save the chart as a PNG file
