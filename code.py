@@ -1,8 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import gzip
 
 # Load the compressed CSV file
-df = pd.read_csv('calendar.csv.gz')
+with gzip.open('calendar.csv.gz', 'rt') as file:
+    df = pd.read_csv(file)
 
 # Convert 'date' column to datetime format
 df['date'] = pd.to_datetime(df['date'])
