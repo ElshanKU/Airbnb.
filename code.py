@@ -1,22 +1,25 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the compressed CSV file from GitHub
-url = 'https://github.com/ElshanKU/Airbnb./raw/main/calendar.csv.gz'
-df = pd.read_csv(url, compression='gzip')
+# Load the compressed CSV file
+df = pd.read_csv('calendar.csv.gz')
 
-# Convert the 'date available' column to datetime format
-df['date_available'] = pd.to_datetime(df['date available'])
+# Convert 'date' column to datetime format
+df['date'] = pd.to_datetime(df['date'])
 
-# Extract month from the 'date available' column
-df['month'] = df['date_available'].dt.month
+# Extract month and year from 'date' column
+df['month'] = df['date'].dt.month
+df['year'] = df['date'].dt.year
 
-# Group the data by month and calculate the average price
-monthly_avg_prices = df.groupby('month')['price'].mean()
+# Group data by month and calculate average price
+monthly_avg_prices = df.groupby(['year', 'month'])['price'].mean()
 
-# Create a bar plot to visualize the average prices by month
-plt.bar(monthly_avg_prices.index, monthly_avg_prices.values)
-plt.xlabel('Month')
+# Create a line plot to visualize the average prices over time
+plt.figure(figsize=(10, 6))
+monthly_avg_prices.plot()
+plt.xlabel('Months')
 plt.ylabel('Average Price')
-plt.title('Average Prices of Listings by Month')
-plt.show()
+plt.title('Average Prices of Listings Over Months')
+
+# Save the chart as a PNG file
+plt.savefig('chart.png')
