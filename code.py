@@ -9,15 +9,14 @@ with gzip.open('calendar.csv.gz', 'rt') as file:
 # Convert 'date' column to datetime format
 df['date'] = pd.to_datetime(df['date'])
 
+# Filter data for January and February of 2024
+filtered_df = df[(df['date'].dt.month.isin([1, 2])) & (df['date'].dt.year == 2024)]
+
 # Extract month and year from 'date' column
-df['month'] = df['date'].dt.strftime('%B')
-df['year'] = df['date'].dt.year
+filtered_df['month'] = filtered_df['date'].dt.strftime('%B')
 
 # Convert 'price' column to numeric values, ignore any non-numeric values
-df['price'] = pd.to_numeric(df['price'], errors='coerce')
-
-# Filter data for January and February of 2024
-filtered_df = df[(df['month'].isin(['January', 'February'])) & (df['year'] == 2024)]
+filtered_df['price'] = pd.to_numeric(filtered_df['price'], errors='coerce')
 
 # Group data by month and calculate average price
 monthly_avg_prices = filtered_df.groupby('month')['price'].mean()
