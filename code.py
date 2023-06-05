@@ -7,34 +7,28 @@ df = pd.read_csv('calendar.csv.gz')
 # Convert 'date' column to datetime format
 df['date'] = pd.to_datetime(df['date'])
 
-# Extract month from 'date' column
+# Extract month and year from 'date' column
 df['month'] = df['date'].dt.strftime('%B')
+df['year'] = df['date'].dt.year
 
 # Convert 'price' column to numeric values, ignore any non-numeric values
 df['price'] = pd.to_numeric(df['price'], errors='coerce')
 
-# Remove rows with NaN (non-numeric) values in the 'price' column
-df = df.dropna(subset=['price'])
+# Filter data for January and February of 2024
+filtered_df = df[(df['month'].isin(['January', 'February'])) & (df['year'] == 2024)]
 
-# Define custom order for months
-month_order = ['January', 'February', 'March', 'April', 'May', 'June',
-               'July', 'August', 'September', 'October', 'November', 'December']
-
-# Group data by month and calculate average price
-monthly_avg_prices = df.groupby('month')['price'].mean()
-
-# Set the 'month' column as the index
-monthly_avg_prices = monthly_avg_prices.reindex(month_order)
-
-# Create a line plot to visualize the average prices over time
+# Create a line plot using filtered data
 plt.figure(figsize=(10, 6))
-monthly_avg_prices.plot(marker='o')
-plt.xlabel('Months')
+plt.plot(filtered_df['date'], filtered_df['price'], marker='o')
+plt.xlabel('Date')
 plt.ylabel('Price ($)')
-plt.title('Average Prices of Listings Over Months')
+plt.title('Price of Listings in January and February 2024')
 
 # Customize the y-axis tick labels
-plt.yticks([50, 150, 350, 500, 1000])
+plt.yticks([150, 200, 350])
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45)
 
 # Save the chart as a PNG file
 plt.savefig('chart.png')
