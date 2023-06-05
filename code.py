@@ -23,9 +23,12 @@ month_order = ['January', 'February', 'March', 'April', 'May', 'June',
 # Group data by month and calculate average price
 monthly_avg_prices = df.groupby('month')['price'].mean()
 
+# Set the 'month' column as the index
+monthly_avg_prices = monthly_avg_prices.reindex(month_order)
+
 # Create a line plot to visualize the average prices over time
 plt.figure(figsize=(10, 6))
-monthly_avg_prices.loc[month_order].plot(marker='o')
+monthly_avg_prices.plot(marker='o')
 plt.xlabel('Months')
 plt.ylabel('Price ($)')
 plt.title('Average Prices of Listings Over Months')
@@ -35,4 +38,3 @@ plt.yticks([50, 150, 350, 500, 1000])
 
 # Save the chart as a PNG file
 plt.savefig('chart.png')
-
