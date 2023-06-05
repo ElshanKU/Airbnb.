@@ -7,9 +7,8 @@ df = pd.read_csv('calendar.csv.gz')
 # Convert 'date' column to datetime format
 df['date'] = pd.to_datetime(df['date'])
 
-# Extract month and year from 'date' column
+# Extract month from 'date' column
 df['month'] = df['date'].dt.strftime('%B')
-df['year'] = df['date'].dt.year
 
 # Convert 'price' column to numeric values, ignore any non-numeric values
 df['price'] = pd.to_numeric(df['price'], errors='coerce')
@@ -26,7 +25,7 @@ monthly_avg_prices = df.groupby('month')['price'].mean()
 
 # Create a line plot to visualize the average prices over time
 plt.figure(figsize=(10, 6))
-monthly_avg_prices.loc[month_order].plot()
+monthly_avg_prices.loc[month_order].plot(marker='o')
 plt.xlabel('Months')
 plt.ylabel('Price ($)')
 plt.title('Average Prices of Listings Over Months')
@@ -36,3 +35,4 @@ plt.yticks([50, 150, 350, 500, 1000])
 
 # Save the chart as a PNG file
 plt.savefig('chart.png')
+
