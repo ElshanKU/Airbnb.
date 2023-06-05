@@ -1,0 +1,33 @@
+name: Create Chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install pandas matplotlib
+
+      - name: Run script and generate chart
+        run: |
+          python code.py
+          ls -lah  # List files to verify the generated chart
+
+      - name: Upload chart as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: chart
+          path: chart.png
