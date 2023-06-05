@@ -25,7 +25,7 @@ month_order = ['January', 'February']
 
 # Create a column chart using the average prices
 plt.figure(figsize=(10, 6))
-monthly_avg_prices.loc[month_order].plot(kind='bar', color='skyblue')
+plt.bar(monthly_avg_prices.index, monthly_avg_prices.values, color='skyblue')
 plt.xlabel('Months')
 plt.ylabel('Price ($)')
 plt.title('Average Prices of Listings in January and February 2024')
