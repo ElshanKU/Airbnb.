@@ -21,8 +21,7 @@ filtered_df = df[(df['month'].isin(['January', 'February'])) & (df['year'] == 20
 monthly_avg_prices = filtered_df.groupby('month')['price'].mean()
 
 # Define the custom order for months
-month_order = ['January', 'February', 'March', 'April', 'May', 'June',
-               'July', 'August', 'September', 'October', 'November', 'December']
+month_order = ['January', 'February']
 
 # Create a column chart using the average prices
 plt.figure(figsize=(10, 6))
@@ -33,9 +32,6 @@ plt.title('Average Prices of Listings in January and February 2024')
 
 # Customize the y-axis tick labels
 plt.yticks([150, 350, 500, 750, 1000])
-
-# Rotate x-axis labels for better readability
-plt.xticks(rotation=45)
 
 # Save the chart as a PNG file
 plt.savefig('chart.png')
